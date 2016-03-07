@@ -1,12 +1,4 @@
-require IEx
-
 defmodule Words do
-  @doc """
-  Count the number of words in the sentence.
-
-  Words are compared case-insensitively.
-"""
-
   def clean_sentence(sentence) do
     sentence
     |> String.downcase
