@@ -7,19 +7,30 @@ defmodule Words do
   Words are compared case-insensitively.
 """
 
-  def update_count(word, map) do
+  def clean_sentence(sentence) do
+    sentence
+    |> String.downcase
+    |> String.replace("_", " ")
+  end
+
+  def split_sentence(sentence) do
+    # Pd = dash punctuation, u = unicode
+    match_only_words = ~r/([^\w\p{Pd}])+/u
+     String.split(sentence, match_only_words, trim: true)
+  end
+
+  def update_word_count(word, map) do
+    # Increment occurence count
     Map.update(map, word, 1, &(&1 + 1))
   end
 
   @spec count(String.t) :: map()
   def count(sentence) do
-    # Pd = dash punctuation
-    sentence = sentence
-    |> String.downcase
-    |> String.replace("_", " ")
 
-    # /u unicode
-    words = String.split(sentence, ~r/([^\w\p{Pd}])+/u, trim: true)
-    map = Enum.reduce(words, Map.new(), fn(word, map) -> update_count(word, map) end)
+    words = sentence
+    |> clean_sentence
+    |> split_sentence
+
+    Enum.reduce(words, Map.new(), fn(w, m) -> update_word_count(w, m) end)
   end
 end
