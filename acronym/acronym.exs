@@ -6,22 +6,14 @@ defmodule Acronym do
   @exclude_chars ",-"
   @whitespace " "
 
-  def whitespace?(letter) do
-    letter === @whitespace
-  end
-
-  def excluded?(letter) do
-    String.contains?(@exclude_chars, letter)
-  end
+  def whitespace?(letter), do: letter === @whitespace
+  def excluded?(letter),   do: String.contains?(@exclude_chars, letter)
+  def downcase?(letter),   do: letter === String.downcase(letter)
 
   def initial?(letter) do
     letter === String.upcase(letter)
     and !whitespace?(letter)
     and !excluded?(letter)
-  end
-
-  def downcase?(letter) do
-    letter === String.downcase(letter)
   end
 
   def replace_word(word, sentence) do
