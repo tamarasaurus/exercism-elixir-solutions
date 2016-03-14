@@ -6,17 +6,17 @@ defmodule Acronym do
   @invalid_chars ",-"
   @whitespace " "
 
-  def whitespace?(string), do: string === @whitespace
-  def downcase?(string),   do: string === String.downcase(string)
-  def upcase?(string),     do: string === String.upcase(string)
-  def invalid?(string),    do: String.contains?(@invalid_chars, string)
+  def not_whitespace?(string), do: !(string === @whitespace)
+  def downcase?(string), do: string === String.downcase(string)
+  def upcase?(string), do: string === String.upcase(string)
+  def valid?(string), do: !(String.contains?(@invalid_chars, string))
   def starts_with_downcase?(string), do: downcase?(String.first(string))
 
   # Returns true if the letter is an initial
   def initial?(letter) do
     upcase?(letter) and
-    !whitespace?(letter) and
-    !invalid?(letter)
+    not_whitespace?(letter) and
+    valid?(letter)
   end
 
   # Capitalise every lowercase word and return the full string
