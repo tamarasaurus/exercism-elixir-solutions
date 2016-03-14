@@ -3,50 +3,44 @@ defmodule Acronym do
   Generate an acronym from a string.
   "This is a string" => "TIAS"
   """
-  @spec abbreviate(string) :: String.t()
-
   @exclude_chars ",-"
+  @whitespace " "
 
-  def is_whitespace(letter) do
-    String.equivalent?(letter, " ")
+  def whitespace?(letter) do
+    letter === @whitespace
   end
 
-  def is_excluded(letter) do
+  def excluded?(letter) do
     String.contains?(@exclude_chars, letter)
   end
 
-  def is_upcase(letter) do
-    String.equivalent?(letter, String.upcase(letter)) && !is_whitespace(letter) && !is_excluded(letter)
+  def initial?(letter) do
+    letter === String.upcase(letter) and !whitespace?(letter) and !excluded?(letter)
   end
 
-  def is_lowercase(letter) do
-    String.equivalent?(letter, String.downcase(letter))
+  def downcase?(letter) do
+    letter === String.downcase(letter)
   end
 
-  def capitalize_word(word, sentence) do
-    first_letter = String.first(word)
-    if is_lowercase(first_letter) do
+  def replace_word(word, sentence) do
+    if downcase?(String.first(word)) do
       String.replace(sentence, word, String.capitalize(word))
     else
       sentence
     end
   end
 
-  def capitalize_sentence(string) do
-    words = String.split(string, " ")
-    Enum.reduce(words, string, fn(w, acc) -> capitalize_word(w, acc) end)
+  def capitalize(string) do
+    words = String.split(string, @whitespace)
+    Enum.reduce(words, string, fn(w, acc) -> replace_word(w, acc) end)
   end
 
-  def split_upcase(string) do
-    letters = string
-    |> capitalize_sentence
-    |> String.codepoints
-    |> Enum.filter(fn(l) -> is_upcase(l) end)
-  end
-
+  @spec abbreviate(string) :: String.t()
   def abbreviate(string) do
-    words = String.split(string, " ")
-    split_upcase(string)
-    |> List.to_string
+    string
+    |> capitalize
+    |> String.codepoints
+    |> Enum.filter(fn l -> initial? l end)
+    |> Enum.join
   end
 end
