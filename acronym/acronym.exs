@@ -15,7 +15,9 @@ defmodule Acronym do
   end
 
   def initial?(letter) do
-    letter === String.upcase(letter) and !whitespace?(letter) and !excluded?(letter)
+    letter === String.upcase(letter)
+    and !whitespace?(letter)
+    and !excluded?(letter)
   end
 
   def downcase?(letter) do
