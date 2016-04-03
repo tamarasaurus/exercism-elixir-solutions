@@ -31,7 +31,6 @@ defmodule RunLengthEncoder do
   end
 
   def decode_letter(set, acc) do
-    IEx.pry
     letter = elem(Enum.fetch(set, 1), 1)
     count = elem(Enum.fetch(set, 0), 1)
     |> String.to_integer
