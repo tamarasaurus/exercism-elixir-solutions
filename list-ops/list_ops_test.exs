@@ -12,17 +12,17 @@ defmodule ListOpsTest do
 
   defp odd?(n), do: rem(n, 2) == 1
 
-  @tag :pending
+  # @tag :pending
   test "count of empty list" do
     assert L.count([]) == 0
   end
 
-  @tag :pending
+  # @tag :pending
   test "count of normal list" do
     assert L.count([1,3,5,7]) == 4
   end
 
-  @tag :pending
+  # @tag :pending
   test "count of huge list" do
     assert L.count(Enum.to_list(1..1_000_000)) == 1_000_000
   end
@@ -68,7 +68,7 @@ defmodule ListOpsTest do
     assert L.filter([1,2,3,4], &odd?/1) == [1,3]
   end
 
-  @tag :pending
+  # @tag :pending
   test "filter of huge list" do
     assert L.filter(Enum.to_list(1..1_000_000), &odd?/1) ==
       Enum.map(1..500_000, &(&1*2-1))
@@ -105,28 +105,28 @@ defmodule ListOpsTest do
     assert L.append([], [1,2,3,4]) == [1,2,3,4]
   end
 
-  @tag :pending
+  # @tag :pending
   test "append of non-empty and empty list" do
     assert L.append([1,2,3,4], []) == [1,2,3,4]
   end
 
-  @tag :pending
+  # @tag :pending
   test "append of non-empty lists" do
     assert L.append([1,2,3], [4,5]) == [1,2,3,4,5]
   end
 
-  @tag :pending
+  # @tag :pending
   test "append of huge lists" do
     assert L.append(Enum.to_list(1..1_000_000), Enum.to_list(1_000_001..2_000_000)) ==
       Enum.to_list(1..2_000_000)
   end
 
-  @tag :pending
+  # @tag :pending
   test "concat of empty list of lists" do
     assert L.concat([]) == []
   end
 
-  @tag :pending
+  # @tag :pending
   test "concat of normal list of lists" do
     assert L.concat([[1,2],[3],[],[4,5,6]]) == [1,2,3,4,5,6]
   end
@@ -137,7 +137,7 @@ defmodule ListOpsTest do
       Enum.to_list(1..1_000_000)
   end
 
-  @tag :pending
+  # @tag :pending
   test "concat of small list of huge lists" do
     assert L.concat(Enum.map(0..9, &Enum.to_list((&1*100_000+1)..((&1+1)*100_000)))) ==
       Enum.to_list(1..1_000_000)

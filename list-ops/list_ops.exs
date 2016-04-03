@@ -10,7 +10,13 @@ defmodule ListOps do
 
   @spec count(list) :: non_neg_integer
   def count(l) do
+    counter(l, 0)
+  end
 
+  def counter([], number), do: number
+  def counter([head|tail], number) do
+    number = number + 1
+    counter(tail, number)
   end
 
   @spec reverse(list) :: list
@@ -48,7 +54,6 @@ defmodule ListOps do
     end
   end
 
-  # for when its empty return empty
   def reduce([], acc, f), do: acc
 
   @type acc :: any
@@ -58,12 +63,19 @@ defmodule ListOps do
   end
 
   @spec append(list, list) :: list
-  def append(a, b) do
+  def append(a, b), do: combine(reverse(a), b)
 
-  end
+  defp combine([], list), do: list
+  defp combine([head|tail], list), do: combine(tail, [head|list])
 
   @spec concat([[any]]) :: [any]
   def concat(ll) do
-
+    join(ll, [])
   end
+
+  defp join([], list), do: list
+  defp join([head|tail], list) do
+    join(tail, append(list, head))
+  end
+
 end
