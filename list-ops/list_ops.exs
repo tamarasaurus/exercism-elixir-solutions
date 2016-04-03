@@ -33,7 +33,13 @@ defmodule ListOps do
 
   @spec map(list, (any -> any)) :: list
   def map(l, f) do
+    mapper(l, f, [])
+  end
 
+  def mapper([], _, list), do: reverse(list)
+
+  def mapper([head|tail], f, list) do
+    mapper(tail, f, [f.(head) | list])
   end
 
   def filter([], f), do: []
